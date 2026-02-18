@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Phishing Email Detection</h1>
+        
+        <form method="POST">
+            <label for="email_text" class="email-label">Paste Email Content:</label>
+            <textarea id="email_text" name="email_text" rows="12" cols="50" placeholder="Paste the email content here...">{{ email_text }}</textarea>
+            <button type="submit">Analyze Email</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result {{ 'phishing' if prediction == 'Phishing' else 'safe' }}">
+                <h2>Prediction: {{ prediction }}</h2>
+                <p class="recommendation">
+                    {{ 'Caution: This email appears suspicious. Avoid clicking any links and report it immediately.' 
+                        if prediction == 'Phishing' else 'This email appears safe, but always remain cautious.' }}
+                </p>
+            </div>
+        {% endif %}
+
+        {% if prediction %}
+            <p class="accurate">How satisfied are you with the prediction?</p>
+            <form method="POST" action="/feedback">
+                <input type="hidden" name="email_text" value="{{ email_text }}">
+                <input type="hidden" name="prediction" value="{{ prediction }}">
+                <button type="submit" name="feedback" value="correct">Satisfied</button>
+                <button type="submit" name="feedback" value="incorrect">Not Satisfied</button>
+            </form>
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ 'alert-success' if category == 'success' else 'alert-danger' }}" style="margin-top: 20px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <footer class="credit">
+        <p>Developed by <a href="#" target="_blank">CHIBUZO NEBECHI</a> © 2026</p>
+    </footer>
+    </div>
+</body>
+</html>

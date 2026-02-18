@@ -1,0 +1,13 @@
+phishing-defense-saas/
+│
+├── datasets/              # Folder to store datasets for training
+├── models/                # Folder to save trained models
+├── src/                   # Folder for main source code
+│   ├── app.py             # Main application file (Flask/Django)
+│   ├── ai_model.py        # Script for phishing detection AI model
+│   └── preprocess.py      # Script for data preprocessing
+│
+├── README.md              # Project overview
+├── requirements.txt       # List of dependencies
+├── .gitignore             # Files to ignore in Git
+└── LICENSE                # License for your project (optional)
