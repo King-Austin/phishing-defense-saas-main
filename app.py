@@ -4,7 +4,7 @@ import os
 import pandas as pd 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Set a secret key for flash messages
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 # Load model and vectorizer
 model_path = os.path.join('models', 'phishing_model.pkl')
