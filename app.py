@@ -119,9 +119,13 @@ def index():
 
         email_vector = vectorizer.transform([email_text])
         prediction = model.predict(email_vector)[0]
+        
+        # Calculate confidence score
+        probabilities = model.predict_proba(email_vector)[0]
+        confidence = round(max(probabilities) * 100, 2)
 
         result = 'Phishing' if prediction == 1 else 'Not Phishing'
-        return render_template('index.html', prediction=result, email_text=email_text)
+        return render_template('index.html', prediction=result, confidence=confidence, email_text=email_text)
 
     return render_template('index.html', prediction=None)
 
